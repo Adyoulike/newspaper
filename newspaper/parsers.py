@@ -13,6 +13,8 @@ import lxml.html.clean
 import re
 from html import unescape
 import string
+import traceback
+from html import unescape
 
 from bs4 import UnicodeDammit
 from copy import deepcopy
