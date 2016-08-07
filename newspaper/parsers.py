@@ -14,7 +14,7 @@ import re
 from html import unescape
 import string
 import traceback
-from html import unescape
+from html.parser import HTMLParser
 
 from bs4 import UnicodeDammit
 from copy import deepcopy
@@ -241,7 +241,7 @@ class Parser(object):
         if attr:
             attr = node.attrib.get(attr, None)
         if attr:
-            attr = unescape(attr)
+            attr = HTMLParser().unescape(attr)
         return attr
 
     @classmethod
