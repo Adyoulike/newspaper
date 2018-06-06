@@ -191,37 +191,7 @@ class StopWordsJapanese(StopWords):
         super(StopWordsJapanese, self).__init__(language='ja')
 
     def candidate_words(self, stripped_input):
-        words = []
-        import MeCab
-        import os, subprocess
-        mecab_path = subprocess.Popen(
-            ['which', 'mecab'],
-            stdout=subprocess.PIPE
-        ).communicate()[0].decode().replace('\n', '')
-        if os.path.exists(mecab_path):
-            # Check if MecCab dictionary exists
-            dic_basedir = subprocess.Popen(
-                ['mecab-config', '--dicdir'],
-                stdout=subprocess.PIPE
-            ).communicate()[0].decode().replace('\n', '')
-            if os.path.exists(dic_basedir):
-                # Setup MecCab dictionary
-                dic_dir = os.path.join(dic_basedir, 'mecab-ipadic-neologd')
-                if os.path.exists(dic_dir):
-                    mecab = MeCab.Tagger('-d {}'.format(dic_dir))
-                else:
-                    mecab = MeCab.Tagger('mecabrc')
-                if mecab:
-                    mecab.parse('')
-                    node = mecab.parseToNode(stripped_input)
-                    while node:
-                        word = node.surface.lower()
-                        pos = node.feature.split(',')[0]
-                        if len(word) > 0 and not pos == '記号':
-                            words.append(word)
-                        node = node.next
-
-        return words
+        return stripped_input
 
     def get_stopword_count(self, content):
         if not content:
